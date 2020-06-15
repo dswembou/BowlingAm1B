@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Ball : MonoBehaviour
 {
-    private Vector3 launchVelocity;
+    public bool inPlay = false;
+    private Vector3 _ballStartPosition;
     private Rigidbody _rigidbody;
     private AudioSource _audioSource;
     
@@ -15,15 +16,25 @@ public class Ball : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _audioSource = GetComponent<AudioSource>();
         _rigidbody.useGravity = false;
-        launchVelocity = new Vector3(0,0,200f); //tijdelijke snelheid dat de bal wordt gegooid
-        //Launch(launchVelocity);
+        _ballStartPosition = transform.position;
     }
 
     public void Launch(Vector3 launchVelocity)
     {
+        inPlay = true;
         _rigidbody.useGravity = true;
         _rigidbody.velocity = launchVelocity;
         _audioSource.Play();
+    }
+
+    public void Reset()
+    {
+        inPlay = false;
+        transform.position = _ballStartPosition;
+        transform.rotation = Quaternion.identity;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+        _rigidbody.useGravity = false;
     }
 
     // Update is called once per frame

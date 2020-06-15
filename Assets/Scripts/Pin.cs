@@ -29,4 +29,20 @@ public class Pin : MonoBehaviour
             return false;
         }
     }
+
+    public void RaiseIfStanding()
+    {
+        if (IsStanding())
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+            transform.Translate(new UnityEngine.Vector3(0, 40f, 0), Space.World);
+
+        }
+    }
+
+    public void Lower()
+    {
+        transform.Translate(new UnityEngine.Vector3(0, -40f, 0), Space.World);
+        GetComponent<Rigidbody>().useGravity = true;
+    }
 }
